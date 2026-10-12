@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ThinkIt Gallery: find any memory just by describing it</title>
+<meta name="description" content="ThinkIt Gallery is a free Android gallery with offline AI search. Find photos, videos and voice notes by describing what is in them, transcribe recordings and copy text from photos. Private: nothing leaves your phone.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0d0a24">
+<meta property="og:title" content="ThinkIt Gallery">
+<meta property="og:description" content="Find any memory just by describing it. Offline. Private. Free.">
+<meta property="og:image" content="assets/og.png">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/inter-extrabold.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Inter;font-weight:400;font-display:swap;src:url(assets/fonts/inter-regular.woff2) format("woff2")}
+@font-face{font-family:Inter;font-weight:600;font-display:swap;src:url(assets/fonts/inter-semibold.woff2) format("woff2")}
+@font-face{font-family:Inter;font-weight:800;font-display:swap;src:url(assets/fonts/inter-extrabold.woff2) format("woff2")}
+:root{
+  --bg:#0d0a24;--bg2:#15113a;--card:rgba(255,255,255,.055);--line:rgba(255,255,255,.11);
+  --text:#f4f1ff;--text2:#c9c2ea;--text3:#9a92c4;
+  --violet:#a88bff;--blue:#5c7cff;--amber:#ffc56b;--coral:#ff8a5c;
+  --warm:linear-gradient(100deg,#ffc56b 0%,#ff8a5c 55%,#e86ab0 100%);
+  --cool:linear-gradient(135deg,#e2d6ff 0%,#a88bff 45%,#5c7cff 100%);
+  --r:22px;--max:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.6 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--amber);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+.sky{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+   radial-gradient(1px 1px at 12% 18%,#fff9 50%,transparent 51%),
+   radial-gradient(1px 1px at 72% 12%,#fff8 50%,transparent 51%),
+   radial-gradient(1.5px 1.5px at 38% 62%,#fff7 50%,transparent 51%),
+   radial-gradient(1px 1px at 88% 48%,#fff9 50%,transparent 51%),
+   radial-gradient(1px 1px at 22% 84%,#fff6 50%,transparent 51%),
+   radial-gradient(1.5px 1.5px at 58% 30%,#ffe3b3aa 50%,transparent 51%),
+   radial-gradient(1px 1px at 94% 82%,#fff7 50%,transparent 51%),
+   radial-gradient(1px 1px at 6% 50%,#fff8 50%,transparent 51%),
+   radial-gradient(900px 600px at 85% -10%,#3a2a8a88,transparent 70%),
+   radial-gradient(700px 500px at -10% 30%,#5a2a6a55,transparent 70%),
+   radial-gradient(800px 600px at 50% 110%,#7a3a2a44,transparent 70%),
+   var(--bg);
+  background-size:420px 420px,520px 520px,610px 610px,380px 380px,470px 470px,700px 700px,560px 560px,330px 330px,auto,auto,auto,auto}
+/* header */
+header{position:sticky;top:0;z-index:10;backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);background:#0d0a24b3;border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:14px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:800;letter-spacing:-.01em}
+.brand img{width:34px;height:34px;border-radius:9px}
+.nav nav{margin-left:auto;display:flex;gap:22px}
+.nav nav a{color:var(--text2);font-weight:600;font-size:15px}
+.nav .btn{margin-left:8px}
+@media (max-width:760px){.nav nav{display:none}}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;font-weight:600;font-size:16px;color:#2a1608;background:var(--warm);box-shadow:0 8px 28px #ff8a5c40;border:0}
+.btn:hover{text-decoration:none;filter:brightness(1.06)}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line);box-shadow:none}
+.btn.small{padding:9px 16px;font-size:14px}
+.btn svg{width:20px;height:20px}
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding:72px 0 40px}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;padding:6px 12px;border-radius:999px;background:#ffc56b1a;border:1px solid #ffc56b40;color:var(--amber);font-weight:600;font-size:13.5px}
+h1{font-size:clamp(40px,6.2vw,72px);line-height:1.02;letter-spacing:-.035em;font-weight:800;margin:18px 0 14px}
+h1 .g{background:var(--cool);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{font-size:clamp(19px,2.2vw,23px);color:var(--text2);margin:0 0 8px;max-width:30em}
+.tag b{color:var(--text);font-weight:600}
+.trio{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 28px}
+.trio span{padding:6px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:600;color:var(--text2)}
+.cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.note{color:var(--text3);font-size:13.5px;margin-top:12px}
+.phones{position:relative;height:620px}
+.phone{position:absolute;width:272px;aspect-ratio:1179/2556;border-radius:40px;padding:9px;background:linear-gradient(160deg,#3a3168,#17123a);box-shadow:0 30px 80px #0009,0 0 0 1px #ffffff1f inset}
+.phone img{width:100%;height:100%;object-fit:cover;border-radius:32px;background:#120e30}
+.phone.a{left:50%;top:0;transform:translateX(-62%) rotate(-4deg);z-index:2}
+.phone.b{left:50%;top:60px;transform:translateX(-2%) rotate(5deg);opacity:.95}
+.glow{position:absolute;inset:10% 5% 0;background:radial-gradient(closest-side,#a88bff55,transparent),radial-gradient(closest-side at 70% 70%,#ff8a5c33,transparent);filter:blur(10px)}
+@media (max-width:900px){.hero{grid-template-columns:1fr;padding-top:44px}.phones{height:520px}.phone{width:226px}}
+@media (max-width:420px){.phones{height:440px}.phone{width:190px;border-radius:32px}.phone img{border-radius:25px}}
+/* sections */
+section{padding:64px 0}
+h2{font-size:clamp(30px,4vw,44px);line-height:1.1;letter-spacing:-.025em;font-weight:800;margin:0 0 12px}
+.lead{color:var(--text2);max-width:40em;margin:0 0 34px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.card h3{margin:14px 0 6px;font-size:19px;letter-spacing:-.01em}
+.card p{margin:0;color:var(--text2);font-size:15.5px}
+.ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:#a88bff22;color:#cdbcff}
+.ic.w{background:#ffc56b22;color:var(--amber)}
+.ic svg{width:24px;height:24px}
+/* example searches */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:9px;padding:5px 16px 5px 5px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:15px}
+.chip i{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:16px;background:var(--cool)}
+.chip i.w{background:var(--warm)}
+/* steps */
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:800px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding-top:58px}
+.step:before{counter-increment:s;content:counter(s);position:absolute;top:20px;left:24px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#2a1608;background:var(--warm)}
+/* screenshots strip */
+.strip{display:flex;gap:18px;overflow-x:auto;padding:6px 2px 18px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.strip figure{margin:0;flex:0 0 220px;scroll-snap-align:start}
+.strip img{width:220px;height:auto;aspect-ratio:1179/2556;object-fit:cover;border-radius:26px;border:1px solid var(--line);background:#120e30}
+.strip figcaption{color:var(--text2);font-size:14px;margin-top:10px;text-align:center}
+/* faq */
+details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:0 20px;margin-bottom:10px}
+summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:600;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";color:var(--amber);font-weight:800;font-size:22px;line-height:1}
+details[open] summary:after{content:"–"}
+details p{margin:0 0 18px;color:var(--text2)}
+/* download */
+.dl{text-align:center;background:linear-gradient(160deg,#2a2160cc,#1a1440cc);border:1px solid var(--line);border-radius:30px;padding:48px 24px}
+.dl img.logo{width:84px;height:84px;margin:0 auto 14px;border-radius:20px}
+.badges{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:22px}
+.play{display:inline-flex;align-items:center;gap:12px;padding:10px 20px;border-radius:14px;background:#000;border:1px solid #ffffff40;color:#fff;text-align:left;line-height:1.15}
+.play small{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#ddd}
+.play b{font-size:19px}
+.play[aria-disabled=true]{opacity:.75;cursor:default}
+.play:hover{text-decoration:none}
+footer{border-top:1px solid var(--line);padding:30px 0 44px;color:var(--text3);font-size:14.5px}
+footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+footer nav{display:flex;gap:18px;flex-wrap:wrap}
+footer a{color:var(--text2)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:8px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="sky" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top"><img src="assets/logo.svg" alt="" width="34" height="34">ThinkIt Gallery</a>
+    <nav aria-label="Sections">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn small" href="#download">Get it</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow">✦ New · free for Android</span>
+      <h1>Find any photo<br><span class="g">by describing it.</span></h1>
+      <p class="tag"><b>A private gallery with on-device AI search. No account, no ads, no cloud.</b> Type “dog on the beach”, “birthday cake” or “voice note about the meeting” and ThinkIt Gallery finds it by what’s <i>in</i> your photos, videos and recordings.</p>
+      <div class="trio" aria-label="Highlights"><span>No account</span><span>No ads</span><span>No cloud</span><span>Android 7+</span></div>
+      <div class="cta">
+        <a class="btn" href="#download"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3a1 1 0 0 1 1 1v9.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.4l3.3 3.3V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>Join the test</a>
+        <a class="btn ghost" href="#download">Download APK</a>
+      </div>
+      <p class="note">Every AI feature runs on your phone using open models you choose to download.</p>
+    </div>
+    <div class="phones" aria-hidden="true">
+      <div class="glow"></div>
+      <div class="phone a"><img src="assets/shots/search.webp" alt="" width="540" height="1171" fetchpriority="high"></div>
+      <div class="phone b"><img src="assets/shots/library.webp" alt="" width="540" height="1171"></div>
+    </div>
+  </div>
+
+  <section id="privacy">
+    <div class="wrap">
+      <h2>Private by design</h2>
+      <p class="lead">Your photos, faces, transcripts and searches stay on your phone. There is no account, no analytics and no cloud AI. The internet is used only for update checks and the optional AI model downloads you choose.</p>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <h2>Everything on your phone, beautifully found</h2>
+      <p class="lead">A fast, good-looking gallery for photos, videos, audio and documents, with a search that understands what you mean.</p>
+      <div class="grid">
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 2a8 8 0 0 1 6.3 12.9l4.4 4.4a1 1 0 0 1-1.4 1.4l-4.4-4.4A8 8 0 1 1 10 2Zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm0 2 .9 2.1L13 9l-2.1.9L10 12l-.9-2.1L7 9l2.1-.9L10 6Z"/></svg></div><h3>Search by describing</h3><p>Describe it and find it, across photos, videos (frames and sound) and audio recordings*. Works in airplane mode.</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 2a1 1 0 0 1 1 1v3h11a1 1 0 0 1 1 1v11h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2H6a1 1 0 0 1-1-1V8H3a1 1 0 0 1 0-2h2V3a1 1 0 0 1 1-1Zm1 6v10h10V8H7Z"/></svg></div><h3>Edit &amp; trim with 24 h undo</h3><p>Crop and adjust photos, trim videos and audio. Save a copy, or replace the original and still restore it for 24 hours.</p></div>
+        <div class="card"><div class="ic w"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 5h9a1 1 0 1 1 0 2H4a1 1 0 0 1 0-2Zm0 6h7a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2Zm0 6h5a1 1 0 1 1 0 2H4a1 1 0 1 1 0-2Zm12.5-6.5 2.4-2.4a1 1 0 0 1 1.4 0l1.6 1.6a1 1 0 0 1 0 1.4L19.5 13l-3-2.5Zm-1.4 1.4 3 2.6-5 5H10v-3l5.1-4.6Z"/></svg></div><h3>Bulk rename</h3><p>Hold one file, then hold another to select everything in between. Type “Holiday” and get Holiday 1, Holiday 2… with a preview first.</p></div>
+        <div class="card"><div class="ic w"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm1 9v2h6v-2H5Zm8 0v2h6v-2h-6Zm-8-4v2h10V9H5Zm12 0v2h2V9h-2Z"/></svg></div><h3>Transcripts</h3><p>Turn voice notes and videos into text, offline. Tap a line to jump there, copy one line or all of it, and find recordings by what was said.</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h5v2H5v3H3V3Zm13 0h5v5h-2V5h-3V3ZM3 16h2v3h3v2H3v-5Zm16 0h2v5h-5v-2h3v-3ZM7 8h10v2H7V8Zm0 3h10v2H7v-2Zm0 3h6v2H7v-2Z"/></svg></div><h3>Text in photos</h3><p>Copy what’s written in a photo: a receipt total, a Wi-Fi password, a sign. Search finds exact words and numbers. Read on the phone, never uploaded.</p></div>
+        <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 13.6V19h14v-1.4l-4-4.6-3 3.5-2-2.2-5 2.3ZM8.5 6a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/></svg></div><h3>Set as wallpaper</h3><p>Position any photo exactly, preview it, then set it for the home screen, lock screen or both.</p></div>
+      </div>
+      <p class="note">* Sound in videos and audio recordings is understood by the Best model; the smaller models search audio by name.</p>
+    </div>
+  </section>
+
+  <section id="examples">
+    <div class="wrap">
+      <h2>Try searching for…</h2>
+      <p class="lead">You search by what’s <b>in</b> the photo, video or recording, not by file names.</p>
+      <div class="chips">
+        <span class="chip"><i>🐕</i>dog on the beach</span>
+        <span class="chip"><i class="w">🎂</i>birthday cake</span>
+        <span class="chip"><i class="w">🌅</i>sunset</span>
+        <span class="chip"><i>🧾</i>receipts</span>
+        <span class="chip"><i>💬</i>screenshot of a chat</span>
+        <span class="chip"><i class="w">🎙️</i>voice note about the meeting</span>
+        <span class="chip"><i>🎸</i>song with guitar</span>
+        <span class="chip"><i class="w">⚽</i>video of kids playing</span>
+        <span class="chip"><i>🏔️</i>mountains in the snow</span>
+        <span class="chip"><i class="w">📄</i>passport photo</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <p class="lead">Three steps, once. After that, search is instant.</p>
+      <div class="steps">
+        <div class="card step"><h3>Install and pick a model</h3><p>Choose Fast, Balanced or Best. We recommend the one your phone runs well. It downloads once, then works offline.</p></div>
+        <div class="card step"><h3>Your phone learns your library</h3><p>ThinkIt Gallery looks at each photo, video and recording on the device and builds a private index. New files are added automatically.</p></div>
+        <div class="card step"><h3>Describe what you remember</h3><p>Type a few words. The best matches appear right above your thumb, with photos, videos and audio together.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screens">
+    <div class="wrap">
+      <h2>A closer look</h2>
+      <div class="strip" tabindex="0" aria-label="App screenshots">
+        <figure><img loading="lazy" src="assets/shots/search.webp" alt="Search results for a described scene" width="540" height="1171"><figcaption>Describe it, find it</figcaption></figure>
+        <figure><img loading="lazy" src="assets/shots/transcript.webp" alt="Transcript of a voice note with timestamps" width="540" height="1171"><figcaption>Transcripts, offline</figcaption></figure>
+        <figure><img loading="lazy" src="assets/shots/phototext.webp" alt="Text read from a receipt photo, ready to copy" width="540" height="1171"><figcaption>Copy text from photos</figcaption></figure>
+        <figure><img loading="lazy" src="assets/shots/onboarding.webp" alt="Welcome screen explaining search by description" width="540" height="1171"><figcaption>A friendly start</figcaption></figure>
+        <figure><img loading="lazy" src="assets/shots/models.webp" alt="Choosing an AI model size" width="540" height="1171"><figcaption>Pick your model</figcaption></figure>
+        <figure><img loading="lazy" src="assets/shots/library.webp" alt="Photo library grid" width="540" height="1171"><figcaption>Your whole library</figcaption></figure>
+        <figure><img loading="lazy" src="assets/shots/trim.webp" alt="Trimming a video" width="540" height="1171"><figcaption>Trim videos &amp; audio</figcaption></figure>
+        <figure><img loading="lazy" src="assets/shots/rename.webp" alt="Bulk rename preview" width="540" height="1171"><figcaption>Rename many at once</figcaption></figure>
+        <figure><img loading="lazy" src="assets/shots/properties.webp" alt="File properties with camera details and location" width="540" height="1171"><figcaption>Every detail, offline</figcaption></figure>
+        <figure><img loading="lazy" src="assets/shots/wallpaper.webp" alt="Setting a wallpaper" width="540" height="1171"><figcaption>Set as wallpaper</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <h2>Questions</h2>
+      <details><summary>Is it really free?</summary><p>Yes. No ads, no in-app purchases, no subscription and no account.</p></details>
+      <details><summary>Do my photos get uploaded anywhere?</summary><p>No. Indexing and search run entirely on your phone. Transcripts and text in photos are made on the phone too. The app only uses the internet to download the AI models you choose (once each) and, in the direct-download version, to check for app updates. See the <a href="privacy.html">Privacy Policy</a>.</p></details>
+      <details><summary>How much space does the AI model need?</summary><p>Fast is about 157 MB and searches names, dates, tags and document text. Balanced is about 370 MB and also understands photos and video frames. Best is about 462 MB and also understands sound in videos and audio recordings. You can keep one or several, switch or delete them any time in Settings › AI models. The gallery also works without a model.</p></details>
+      <details><summary>Will it drain my battery?</summary><p>The first index of a large library takes a while and uses power, so you can let it run only while charging. After that only new files are indexed, a few seconds each.</p></details>
+      <details><summary>Can it transcribe voice notes?</summary><p>Yes. Download a transcript model in Settings › AI models (Fast about 42 MB, Balanced about 57 MB, Accurate about 181 MB), open a recording or video and tap Transcript. It detects the language, or you pick it. You can also let new voice notes be transcribed in the background while charging. Transcripts stay on your phone and are searchable.</p></details>
+      <details><summary>Which phones are supported?</summary><p>Any Android 7.0 or newer. AI search needs a 64-bit phone (almost every phone since 2017); on older 32-bit phones the gallery, editing and everything else still work.</p></details>
+      <details><summary>What if I replace a photo by mistake?</summary><p>When you save an edit over the original, the original is kept for 24 hours. Tap Undo right away, or restore it later from Settings › Recently replaced.</p></details>
+      <details><summary>Does it work offline?</summary><p>Yes. Once a model is downloaded, search, transcripts and text in photos work in airplane mode.</p></details>
+      <details><summary>Does it work on tablets?</summary><p>It runs on Android tablets and foldables, but it is designed and tested for phones first.</p></details>
+      <details><summary>How do I contact you?</summary><p>Email richardshanemccaw@gmail.com, or use Send feedback in the app’s Settings.</p></details>
+      <details><summary>Who makes ThinkIt Gallery?</summary><p>Richard van Wyk, an independent developer in Namibia.</p></details>
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="wrap">
+      <div class="dl">
+        <img class="logo" src="assets/logo.svg" alt="" width="84" height="84">
+        <h2>Get ThinkIt Gallery</h2>
+        <p class="lead" style="margin:0 auto">Free for Android 7.0 and newer.</p>
+        <div class="badges">
+          <!-- PLACEHOLDER: until production launch this links to the closed-test opt-in (CLOSED_TEST_URL_TBD).
+               After launch, replace with Google's official "Get it on Google Play" badge artwork linking to
+               https://play.google.com/store/apps/details?id=com.shaneteks.gallery (follow the badge guidelines). -->
+          <a class="play" href="CLOSED_TEST_URL_TBD" rel="noopener" title="Join the Google Play test">
+            <svg width="26" height="28" viewBox="0 0 26 28" aria-hidden="true"><path fill="#34A853" d="M1 1.2 14.4 14 1 26.8c-.4-.3-.6-.8-.6-1.4V2.6c0-.6.2-1.1.6-1.4Z"/><path fill="#FBBC04" d="m18.8 9.6-4.4 4.4 4.4 4.4 5-2.8c1.4-.8 1.4-2.4 0-3.2l-5-2.8Z"/><path fill="#EA4335" d="M14.4 14 1 26.8c.5.4 1.2.4 2 0l15.8-8.4-4.4-4.4Z"/><path fill="#4285F4" d="M14.4 14 18.8 9.6 3 1.2c-.8-.4-1.5-.4-2 0L14.4 14Z"/></svg>
+            <span><small>Join the test on</small><b>Google Play</b></span>
+          </a>
+          <a class="btn" href="https://github.com/ShaneTeks/gallery-app-releases/releases/latest" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3a1 1 0 0 1 1 1v9.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.4l3.3 3.3V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+            Download APK (GitHub)
+          </a>
+        </div>
+        <p class="note">The APK is the direct-download version with built-in updates. Android will ask you to allow installs from your browser.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>© 2026 Richard van Wyk, Namibia · <a href="mailto:richardshanemccaw@gmail.com">richardshanemccaw@gmail.com</a></span>
+    <nav aria-label="Legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="licences.html">Licences</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
