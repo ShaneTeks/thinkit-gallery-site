@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ThinkIt Gallery: find any memory just by describing it</title>
-<meta name="description" content="ThinkIt Gallery is a free Android gallery with offline AI search. Find photos, videos and voice notes by describing what is in them, transcribe recordings and copy text from photos. Private: nothing leaves your phone.">
+<meta name="description" content="ThinkIt Gallery is a private Android gallery with offline AI search. Find photos, videos and voice notes by describing what is in them, transcribe recordings and copy text from photos. Private: nothing leaves your phone.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; font-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0d0a24">
 <meta property="og:title" content="ThinkIt Gallery">
-<meta property="og:description" content="Find any memory just by describing it. Offline. Private. Free.">
+<meta property="og:description" content="Your memories never leave home. Smart search, zero cloud.">
 <meta property="og:image" content="https://gallery.shaneteks.dev/assets/og.png">
 <meta property="og:url" content="https://gallery.shaneteks.dev/">
 <link rel="canonical" href="https://gallery.shaneteks.dev/">
@@ -19,6 +19,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/inter-extrabold.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@media (max-width:700px){#features ul{columns:1!important}}
 @font-face{font-family:Inter;font-weight:400;font-display:swap;src:url(assets/fonts/inter-regular.woff2) format("woff2")}
 @font-face{font-family:Inter;font-weight:600;font-display:swap;src:url(assets/fonts/inter-semibold.woff2) format("woff2")}
 @font-face{font-family:Inter;font-weight:800;font-display:swap;src:url(assets/fonts/inter-extrabold.woff2) format("woff2")}
@@ -156,9 +157,9 @@ footer a{color:var(--text2)}
 <main id="top">
   <div class="wrap hero">
     <div>
-      <span class="eyebrow">✦ New · free for Android</span>
-      <h1>Find any photo<br><span class="g">by describing it.</span></h1>
-      <p class="tag"><b>A private gallery with on-device AI search. No account, no ads, no cloud.</b> Type “dog on the beach”, “birthday cake” or “voice note about the meeting” and ThinkIt Gallery finds it by what’s <i>in</i> your photos, videos and recordings.</p>
+      <span class="eyebrow">✦ New for Android · no ads, ever</span>
+      <h1>Your memories<br><span class="g">never leave home.</span></h1>
+      <p class="tag"><b>Smart search. Zero cloud.</b> Find any photo by describing it, with AI that runs entirely on your phone. Type “dog on the beach”, “birthday cake” or “voice note about the meeting” and ThinkIt Gallery finds it by what’s <i>in</i> your photos, videos and recordings.</p>
       <div class="trio" aria-label="Highlights"><span>No account</span><span>No ads</span><span>No cloud</span><span>Android 7+</span></div>
       <div class="cta">
         <a class="btn" href="#download"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3a1 1 0 0 1 1 1v9.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-5 5a1 1 0 0 1-1.4 0l-5-5a1 1 0 1 1 1.4-1.4l3.3 3.3V4a1 1 0 0 1 1-1Zm-7 15a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>Join the test</a>
@@ -194,6 +195,7 @@ footer a{color:var(--text2)}
         <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 5c0-.55.45-1 1-1h5c.55 0 1-.45 1-1s-.45-1-1-1H4c-1.1 0-2 .9-2 2v6c0 .55.45 1 1 1s1-.45 1-1V5zm5.61 8.49l-2.96 3.7c-.26.33-.03.81.39.81H17c.41 0 .65-.47.4-.8l-2-2.67c-.2-.27-.6-.27-.8 0l-1.63 2.18-2.58-3.22c-.2-.25-.58-.25-.78 0zM17 8.5c0-.83-.67-1.5-1.5-1.5S14 7.67 14 8.5s.67 1.5 1.5 1.5S17 9.33 17 8.5zM20 2h-6c-.55 0-1 .45-1 1s.45 1 1 1h5c.55 0 1 .45 1 1v5c0 .55.45 1 1 1s1-.45 1-1V4c0-1.1-.9-2-2-2zm0 17c0 .55-.45 1-1 1h-5c-.55 0-1 .45-1 1s.45 1 1 1h6c1.1 0 2-.9 2-2v-6c0-.55-.45-1-1-1s-1 .45-1 1v5zM3 13c-.55 0-1 .45-1 1v6c0 1.1.9 2 2 2h6c.55 0 1-.45 1-1s-.45-1-1-1H5c-.55 0-1-.45-1-1v-5c0-.55-.45-1-1-1z"/></svg></div><h3>Set as wallpaper</h3><p>Position any photo exactly, preview it, then set it for the home screen, lock screen or both.</p></div>
       </div>
       <p class="note">* Sound in videos and audio recordings is understood by the Best model; the smaller models search audio by name.</p>
+    <div class="card" style="margin-top:22px"><h3>Everything it does</h3><ul style="columns:2;column-gap:28px;margin:8px 0 0;padding-left:18px"><li>Search photos, videos and recordings by describing them (offline)</li><li>Voice search, recognised on your phone</li><li>Transcripts of voice notes and videos</li><li>Copy text from photos (receipts, signs, Wi-Fi passwords)</li><li>People: find photos of someone you named (on-device faces)</li><li>Cut-outs and stickers from photos</li><li>Photo editor: crop, adjust, filters, markup</li><li>Trim videos and audio; exact clips when sharing</li><li>Photos to video with your music</li><li>Save as copy or replace with 24-hour undo</li><li>Bulk rename with preview; share many at once</li><li>Pins for favourite files; duplicates and similar photos</li><li>PDF viewer, editor, merge and photos-to-PDF</li><li>Video player with waveform scrubber, hold for 2x or rewind, slow-mo and pinch zoom</li><li>Music player with equalizer, swipe between songs and a mini player that keeps playing</li><li>Set wallpapers and ringtones</li><li>Sort by name, date or size; date ranges; pinch-to-resize grid</li><li>Home-screen search widget</li><li>Works offline once a model is downloaded</li></ul></div>
     </div>
   </section>
 
@@ -202,16 +204,16 @@ footer a{color:var(--text2)}
       <h2>Try searching for…</h2>
       <p class="lead">You search by what’s <b>in</b> the photo, video or recording, not by file names.</p>
       <div class="chips">
-        <span class="chip"><i>🐕</i>dog on the beach</span>
+        <span class="chip"><img src="assets/demo/pet.webp" alt="" width="24" height="24" loading="lazy" style="width:24px;height:24px;border-radius:8px;object-fit:cover">dog on the beach</span>
         <span class="chip"><i class="w">🎂</i>birthday cake</span>
-        <span class="chip"><i class="w">🌅</i>sunset</span>
-        <span class="chip"><i>🧾</i>receipts</span>
+        <span class="chip"><img src="assets/demo/beach.webp" alt="" width="24" height="24" loading="lazy" style="width:24px;height:24px;border-radius:8px;object-fit:cover">sunset</span>
+        <span class="chip"><img src="assets/demo/receipt.webp" alt="" width="24" height="24" loading="lazy" style="width:24px;height:24px;border-radius:8px;object-fit:cover">receipts</span>
         <span class="chip"><i>💬</i>screenshot of a chat</span>
         <span class="chip"><i class="w">🎙️</i>voice note about the meeting</span>
         <span class="chip"><i>🎸</i>song with guitar</span>
         <span class="chip"><i class="w">⚽</i>video of kids playing</span>
         <span class="chip"><i>🏔️</i>mountains in the snow</span>
-        <span class="chip"><i class="w">📄</i>passport photo</span>
+        <span class="chip"><img src="assets/demo/portrait.webp" alt="" width="24" height="24" loading="lazy" style="width:24px;height:24px;border-radius:8px;object-fit:cover">passport photo</span>
       </div>
     </div>
   </section>
@@ -249,7 +251,7 @@ footer a{color:var(--text2)}
   <section id="faq">
     <div class="wrap">
       <h2>Questions</h2>
-      <details><summary>Is it really free?</summary><p>Yes. No ads, no in-app purchases, no subscription and no account.</p></details>
+      <details><summary>What does it cost?</summary><p>US$0.99 in launch week, then US$1.99, once. No ads, no subscription, no in-app purchases and no account.</p></details>
       <details><summary>Do my photos get uploaded anywhere?</summary><p>No. Indexing and search run entirely on your phone. Transcripts and text in photos are made on the phone too. The app only uses the internet to download the AI models you choose (once each) and, in the direct-download version, to check for app updates. See the <a href="privacy.html">Privacy Policy</a>.</p></details>
       <details><summary>How much space does the AI model need?</summary><p>Fast is about 157 MB and searches names, dates, tags and document text. Balanced is about 370 MB and also understands photos and video frames. Best is about 462 MB and also understands sound in videos and audio recordings. You can keep one or several, switch or delete them any time in Settings › AI models. The gallery also works without a model.</p></details>
       <details><summary>Will it drain my battery?</summary><p>The first index of a large library takes a while and uses power, so you can let it run only while charging. After that only new files are indexed, a few seconds each.</p></details>
@@ -268,7 +270,7 @@ footer a{color:var(--text2)}
       <div class="dl">
         <img class="logo" src="assets/stack.svg" alt="" width="84" height="84">
         <h2>Get ThinkIt Gallery</h2>
-        <p class="lead" style="margin:0 auto">Free for Android 7.0 and newer.</p>
+        <p class="lead" style="margin:0 auto">One-time purchase on Google Play (US$0.99 launch week, then US$1.99). Android 7.0 and newer.</p>
         <div class="badges">
           <!-- PLACEHOLDER: until production launch this links to the closed-test opt-in (CLOSED_TEST_URL_TBD).
                After launch, replace with Google's official "Get it on Google Play" badge artwork linking to
